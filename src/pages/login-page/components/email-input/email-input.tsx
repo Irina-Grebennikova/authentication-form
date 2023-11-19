@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { ChangeEvent, FocusEvent, ReactElement, useState } from 'react';
+import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import userSmallIcon from '@/assets/icons/user-small.png';
 import { validateEmail } from '@/utils/validation';
@@ -7,23 +7,28 @@ import { validateEmail } from '@/utils/validation';
 import styles from './email-input.module.scss';
 
 type EmailInputProps = {
+  isSubmited: boolean;
   isEmailAccepted: boolean;
   setIsEmailAccepted: (isAccepted: boolean) => void;
 };
 
-function EmailInput({ isEmailAccepted, setIsEmailAccepted }: EmailInputProps): ReactElement {
+function EmailInput({ isSubmited, isEmailAccepted, setIsEmailAccepted }: EmailInputProps): ReactElement {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
 
-  function checkEmail({ target }: FocusEvent<HTMLInputElement>): void {
-    const { value } = target;
+  useEffect(() => {
+    if (isSubmited) {
+      checkEmail();
+    }
+  }, [isSubmited]);
 
-    if (value === '') {
+  function checkEmail(): void {
+    if (email === '') {
       setEmailError('This field is required');
       setIsEmailValid(false);
       setIsEmailAccepted(false);
-    } else if (!validateEmail(value)) {
+    } else if (!validateEmail(email)) {
       setEmailError('Email is not valid');
       setIsEmailValid(false);
       setIsEmailAccepted(false);

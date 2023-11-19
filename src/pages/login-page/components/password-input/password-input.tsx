@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { ChangeEvent, FocusEvent, ReactElement, useState } from 'react';
+import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import hideIcon from '@/assets/icons/hide.svg';
 import lockClosedIcon from '@/assets/icons/lock-closed.png';
@@ -9,24 +9,29 @@ import { validatePassword } from '@/utils/validation';
 import styles from './password-input.module.scss';
 
 type PasswordInputProps = {
+  isSubmited: boolean;
   isPasswordAccepted: boolean;
   setIsPasswordAccepted: (isAccepted: boolean) => void;
 };
 
-function PasswordInput({ isPasswordAccepted, setIsPasswordAccepted }: PasswordInputProps): ReactElement {
+function PasswordInput({ isPasswordAccepted, setIsPasswordAccepted, isSubmited }: PasswordInputProps): ReactElement {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
-  function checkPassword({ target }: FocusEvent<HTMLInputElement>): void {
-    const { value } = target;
+  useEffect(() => {
+    if (isSubmited) {
+      checkPassword();
+    }
+  }, [isSubmited]);
 
-    if (value === '') {
+  function checkPassword(): void {
+    if (password === '') {
       setPasswordError('This field is required');
       setIsPasswordValid(false);
       setIsPasswordAccepted(false);
-    } else if (!validatePassword(value)) {
+    } else if (!validatePassword(password)) {
       setPasswordError('Password must be at least 6 characters long and contain a number');
       setIsPasswordValid(false);
       setIsPasswordAccepted(false);
