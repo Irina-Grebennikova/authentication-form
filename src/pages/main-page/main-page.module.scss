@@ -1,0 +1,15 @@
+@import '@/styles/vars.module.scss';
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 5%;
+  text-align: center;
+  color: $white;
+  font-weight: 700;
+  line-height: 120%;
+  font-size: clamp(20px, 10vw, 70px);
+  background: linear-gradient(to top, #8ae1f3, #937efd, $blue);
+}
