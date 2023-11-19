@@ -14,7 +14,8 @@ $white: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3%;
+  width: clamp(300px, 22vw, 500px);
+  padding: clamp(35px, 3%, 100px) 3%;
   box-shadow:
     0 0 20px 0 rgba(0, 0, 0, 0.2),
     0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -22,7 +23,7 @@ $white: #fff;
 
 .inputbox {
   position: relative;
-  width: 17vw;
+  width: 100%;
   margin-bottom: 2vh;
   background-color: $white;
 }
@@ -53,7 +54,7 @@ $white: #fff;
 }
 
 .submitButton {
-  width: 17vw;
+  width: 100%;
   padding: 13px 0;
 
   color: $white;

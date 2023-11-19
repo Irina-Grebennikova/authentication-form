@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function MainPage(): ReactElement {
@@ -6,7 +6,7 @@ function MainPage(): ReactElement {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isUserLoggedIn) {
+    if (!isUserLoggedIn) {
       navigate('/login');
     }
   }, []);
