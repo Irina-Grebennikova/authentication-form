@@ -1,4 +1,6 @@
 $blue: #3543bd;
+$green: #26ac48;
+$red: #de3d3d;
 $white: #fff;
 
 .page {
@@ -7,7 +9,7 @@ $white: #fff;
   align-items: center;
   height: 100vh;
 
-  background: linear-gradient(to top, #8ae1f3, #937efd, #3543bd);
+  background: linear-gradient(to top, #8ae1f3, #937efd, $blue);
 }
 
 .form {
@@ -30,12 +32,28 @@ $white: #fff;
 
 .input {
   width: 100%;
-  padding: 11px 10px 11px 35px;
+  padding: 11px 10px 11px 40px;
   font-size: 15px;
 
   &:focus {
     outline: 2px solid $blue;
   }
+
+  &.valid {
+    outline: 2px solid $green;
+  }
+
+  &.invalid {
+    outline: 2px solid $red;
+  }
+}
+
+.errorMessage {
+  margin: -1vh 0 10px;
+  color: $red;
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
 }
 
 .bigIcon {
@@ -45,7 +63,7 @@ $white: #fff;
 .smallIcon {
   position: absolute;
   top: calc(50% - 11px);
-  left: 3%;
+  left: 4%;
   height: 22px;
 }
 
@@ -65,8 +83,13 @@ $white: #fff;
   background-color: $blue;
   transition: 0.3s;
 
+  &:disabled {
+    cursor: not-allowed;
+    background-color: lighten($blue, 10%);
+  }
+
   @media (hover: hover) {
-    &:hover {
+    &:not(:disabled):hover {
       background-color: darken($blue, 10%);
     }
   }
