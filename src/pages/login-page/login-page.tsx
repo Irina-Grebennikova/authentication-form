@@ -1,7 +1,9 @@
-import { FormEvent, ReactElement, useState } from 'react';
+import { FormEvent, ReactElement, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { authorizeUser, isUserExist } from '@/api';
 import userIcon from '@/assets/icons/user-big.png';
+import { AppContext } from '@/components/app';
 import { Loader } from '@/components/loader';
 
 import { EmailInput } from './components/email-input';
@@ -13,6 +15,9 @@ function LoginPage(): ReactElement {
   const [isPasswordAccepted, setIsPasswordAccepted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
+
+  const { isUserLoggedIn, setIsUserLoggedIn } = useContext(AppContext);
+  const navigate = useNavigate();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
@@ -33,26 +38,34 @@ function LoginPage(): ReactElement {
         alert('Wrong email or password');
       } else {
         await authorizeUser(email, password);
-        alert('You are logged in!');
+        setIsUserLoggedIn(true);
+
+        setTimeout(() => navigate('/'), 1000);
       }
       setIsLoading(() => false);
     })();
   }
 
+  const content = isUserLoggedIn ? (
+    <p className={styles.success}>{"You've successfully logged in!"}</p>
+  ) : (
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <img className={styles.userIcon} src={userIcon} alt="" width={128} height={128} />
+      <EmailInput isEmailAccepted={isEmailAccepted} setIsEmailAccepted={setIsEmailAccepted} isSubmited={isSubmited} />
+      <PasswordInput
+        isPasswordAccepted={isPasswordAccepted}
+        setIsPasswordAccepted={setIsPasswordAccepted}
+        isSubmited={isSubmited}
+      />
+      <button className={styles.submitButton} type="submit" disabled={isLoading}>
+        {isLoading ? <Loader /> : 'login'}
+      </button>
+    </form>
+  );
+
   return (
     <main className={styles.page}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <img className={styles.userIcon} src={userIcon} alt="" width={128} height={128} />
-        <EmailInput isEmailAccepted={isEmailAccepted} setIsEmailAccepted={setIsEmailAccepted} isSubmited={isSubmited} />
-        <PasswordInput
-          isPasswordAccepted={isPasswordAccepted}
-          setIsPasswordAccepted={setIsPasswordAccepted}
-          isSubmited={isSubmited}
-        />
-        <button className={styles.submitButton} type="submit" disabled={isLoading}>
-          {isLoading ? <Loader /> : 'login'}
-        </button>
-      </form>
+      <div className={styles.container}>{content}</div>
     </main>
   );
 }
