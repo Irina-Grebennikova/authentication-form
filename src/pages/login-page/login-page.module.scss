@@ -1,7 +1,4 @@
-$blue: #3543bd;
-$green: #26ac48;
-$red: #de3d3d;
-$white: #fff;
+@import '@/styles/vars.module.scss';
 
 .page {
   display: flex;
@@ -16,59 +13,15 @@ $white: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: clamp(300px, 22vw, 500px);
-  padding: clamp(35px, 3%, 100px) 3%;
+  width: clamp(300px, 50vw, 400px);
+  padding: clamp(35px, 5%, 100px) 3%;
   box-shadow:
     0 0 20px 0 rgba(0, 0, 0, 0.2),
     0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-.inputbox {
-  position: relative;
-  width: 100%;
-  margin-bottom: 2vh;
-  background-color: $white;
-}
-
-.input {
-  width: 100%;
-  padding: 11px 10px 11px 40px;
-  font-size: 15px;
-
-  &:focus {
-    outline: 2px solid $blue;
-  }
-
-  &.valid {
-    outline: 2px solid $green;
-  }
-
-  &.invalid {
-    outline: 2px solid $red;
-  }
-}
-
-.errorMessage {
-  margin: -1vh 0 10px;
-  color: $red;
-  font-size: 14px;
-  font-style: italic;
-  text-align: center;
-}
-
-.bigIcon {
+.userIcon {
   margin-bottom: 5vh;
-}
-
-.smallIcon {
-  position: absolute;
-  top: calc(50% - 11px);
-  left: 4%;
-  height: 22px;
-}
-
-.lockIcon {
-  cursor: pointer;
 }
 
 .submitButton {
